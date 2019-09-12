@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.beilin.mapper.IDCardMapper">
+
+    <!--  user表与身份证表的一对一映射-->
+    <resultMap type="iDCard" id="IDCardOfUserMap">
+        <id property="cardId" column="cardId"/>
+        <result property="beginTime" column="begin_time"/>
+        <result property="endTime" column="end_time"/>
+        <association property="user" javaType="user">
+            <id property="id" column="id"/>
+            <result property="name" column="name"/>
+            <result property="age" column="age"/>
+        </association>
+    </resultMap>
+
+    <!--插入id_card表信息-->
+    <insert id="insert" parameterType="iDCard">
+        insert into id_card values(#{cardId},#{uid},#{beginTime},#{endTime})
+    </insert>
+
+    <!--根据uid删除id_card表信息-->
+    <delete id="delete" parameterType="int">
+        delete from id_card where uid=#{uid}
+    </delete>
+
+    <!--根据uid修改id_card表信息-->
+    <update id="update" parameterType="iDCard">
+        update id_card set cardId=#{cardId},begin_time=#{beginTime},end_time=#{endTime} where uid=#{uid}
+    </update>
+
+    <!--根据uid查询id_card信息-->
+    <select id="getByUid" parameterType="int" resultType="iDCard">
+        select * from id_card where uid=#{uid} limit 1;
+    </select>
+
+    <!-- 查出带有uer信息的id_card列表 -->
+    <select id="getListIdOfUser" resultMap="IDCardOfUserMap">
+        select * from id_card a,user b where a.uid=b.id;
+    </select>
+
+</mapper>

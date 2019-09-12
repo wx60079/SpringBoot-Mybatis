@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.beilin.mapper.UserMapper">
+
+    <!-- 插入一个user -->
+    <insert id="insert" parameterType="user">
+    insert into user(name,age) values(#{name},#{age})
+    </insert>
+
+    <!-- 根据id删除user -->
+    <delete id="delete" parameterType="int">
+    delete  from user where id=#{id}
+    </delete>
+
+    <!-- 根据id修改user信息 -->
+    <update id="update" parameterType="user">
+    update user set name=#{name},age=#{age} where id=#{id}
+    </update>
+
+    <!-- 根据id查询 -->
+    <select id="getById" parameterType="int" resultType="user">
+    select * from user where id=#{id}
+    </select>
+
+    <!-- 查询所有 -->
+    <select id="list" parameterType="int" resultType="user">
+    select * from user
+    </select>
+
+</mapper>
+
+
+
